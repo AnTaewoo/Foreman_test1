@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from convert import main
 
 
@@ -34,3 +36,14 @@ def test_main_reports_kelvin_value_error(capsys):
 
     assert result == 1
     assert capsys.readouterr().out.startswith("error: ")
+
+
+def test_readme_documents_run_and_test_commands():
+    readme = Path(__file__).resolve().parent / "README.md"
+    content = readme.read_text()
+
+    assert "## Run" in content
+    assert "python convert.py 100 --to f" in content
+    assert "212.0" in content
+    assert "## Test" in content
+    assert "pytest -q" in content
